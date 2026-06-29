@@ -14,7 +14,7 @@ team_members:
     role: "ML Engineer"
 
 github_repo: "https://github.com/arsh342/redrob_hackathon"
-sandbox_link: "TODO https://YOUR-SANDBOX-LINK"
+sandbox_link: "https://redrobhackathon.streamlit.app/"
 reproduce_command: "python3 rank.py --candidates ./candidates.jsonl --out ./outputs/submission.csv"
 
 compute:
