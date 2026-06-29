@@ -1,0 +1,13 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+.openclaude/
+.streamlit/
+.pytest_cache/
+.mypy_cache/
+.coverage
+.ipynb_checkpoints/
+candidates.jsonl
+outputs/submission.csv
+.agents/

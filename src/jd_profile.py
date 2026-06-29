@@ -1,0 +1,187 @@
+"""Static JD-aligned scoring rules."""
+
+from __future__ import annotations
+
+POSITIVE_TITLE_WEIGHTS = {
+    "senior ai engineer": 28.0,
+    "lead ai engineer": 27.0,
+    "senior ml engineer - search & ranking": 27.0,
+    "staff machine learning engineer": 26.0,
+    "senior machine learning engineer": 25.0,
+    "senior software engineer (ml)": 24.0,
+    "recommendation systems engineer": 24.0,
+    "search engineer": 23.0,
+    "applied ml engineer": 23.0,
+    "machine learning engineer": 22.0,
+    "nlp engineer": 21.0,
+    "ai engineer": 18.0,
+    "ml engineer": 18.0,
+    "data scientist": 14.0,
+    "ai research engineer": 10.0,
+    "ai specialist": 8.0,
+}
+
+TITLE_KEYWORD_WEIGHTS = {
+    "search": 9.0,
+    "ranking": 9.0,
+    "retrieval": 8.0,
+    "recommendation": 9.0,
+    "machine learning": 8.0,
+    "ml": 5.0,
+    "nlp": 7.0,
+    "ai": 5.0,
+    "relevance": 6.0,
+}
+
+NEGATIVE_TITLES = {
+    "marketing manager": 18.0,
+    "graphic designer": 18.0,
+    "content writer": 18.0,
+    "hr manager": 18.0,
+    "sales executive": 18.0,
+    "customer support": 16.0,
+    "accountant": 16.0,
+    "civil engineer": 15.0,
+    "mechanical engineer": 15.0,
+    "operations manager": 14.0,
+}
+
+TARGET_CITIES = {
+    "noida",
+    "pune",
+    "hyderabad",
+    "bangalore",
+    "bengaluru",
+    "mumbai",
+    "delhi",
+    "gurgaon",
+    "gurugram",
+}
+
+SERVICE_COMPANIES = {
+    "tcs",
+    "infosys",
+    "wipro",
+    "accenture",
+    "cognizant",
+    "capgemini",
+    "mindtree",
+    "hcl",
+    "tech mahindra",
+    "ibm india",
+    "lti",
+    "ltimindtree",
+}
+
+PRODUCT_COMPANIES = {
+    "google",
+    "meta",
+    "amazon",
+    "microsoft",
+    "flipkart",
+    "swiggy",
+    "zomato",
+    "uber",
+    "ola",
+    "atlassian",
+    "razorpay",
+    "meesho",
+    "cred",
+    "phonepe",
+    "airbnb",
+    "myntra",
+    "linkedin",
+    "netflix",
+}
+
+POSITIVE_SKILLS = {
+    "python": 4.0,
+    "machine learning": 4.0,
+    "information retrieval": 7.0,
+    "semantic search": 7.0,
+    "embeddings": 7.0,
+    "vector search": 7.0,
+    "learning to rank": 8.0,
+    "bm25": 6.0,
+    "sentence transformers": 6.0,
+    "pgvector": 5.0,
+    "faiss": 7.0,
+    "pinecone": 7.0,
+    "qdrant": 7.0,
+    "weaviate": 7.0,
+    "milvus": 7.0,
+    "elasticsearch": 7.0,
+    "opensearch": 7.0,
+    "retrieval augmented generation": 4.0,
+    "rag": 3.0,
+    "vector databases": 6.0,
+    "recommendation systems": 8.0,
+    "recommender systems": 8.0,
+    "nlp": 5.0,
+    "xgboost": 4.0,
+    "lightgbm": 4.0,
+    "mlflow": 3.0,
+    "llmops": 3.0,
+    "peft": 1.5,
+    "lora": 1.5,
+    "qlora": 1.5,
+    "a/b testing": 5.0,
+    "ranking systems": 8.0,
+}
+
+CAREER_POSITIVE_PHRASES = {
+    "search": 6.0,
+    "semantic search": 8.0,
+    "hybrid search": 8.0,
+    "retrieval": 7.0,
+    "ranking": 7.0,
+    "recommendation": 7.0,
+    "recommender": 7.0,
+    "embedding": 7.0,
+    "vector database": 7.0,
+    "vector search": 8.0,
+    "faiss": 7.0,
+    "pinecone": 7.0,
+    "qdrant": 7.0,
+    "weaviate": 7.0,
+    "elasticsearch": 7.0,
+    "opensearch": 7.0,
+    "ann index": 7.0,
+    "retrieval quality": 7.0,
+    "search relevance": 8.0,
+    "ndcg": 8.0,
+    "mrr": 7.0,
+    "map": 7.0,
+    "a/b test": 6.0,
+    "offline benchmark": 6.0,
+    "recommendation engine": 8.0,
+    "matching system": 8.0,
+    "ranking system": 8.0,
+}
+
+SUMMARY_NEGATIVE_PHRASES = {
+    "recently exploring genai": 8.0,
+    "online courses on rag": 10.0,
+    "langchain": 5.0,
+    "openai api": 5.0,
+    "side projects": 5.0,
+    "building competence on the ml side": 8.0,
+    "interested in transitioning toward more ai": 9.0,
+}
+
+RESEARCH_NEGATIVE_PHRASES = {
+    "research scientist": 6.0,
+    "academic lab": 8.0,
+    "published papers": 3.0,
+}
+
+EVAL_TERMS = {
+    "ndcg",
+    "mrr",
+    "map",
+    "a/b",
+    "ab test",
+    "offline benchmark",
+    "evaluation",
+    "relevance",
+}

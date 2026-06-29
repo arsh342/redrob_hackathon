@@ -1,0 +1,51 @@
+# Redrob Hackathon submission metadata
+# Fill remaining placeholders before final portal upload.
+
+team_name: "Team0"
+
+primary_contact:
+  name: "Arshdeep Singh"
+  email: "arshth134@gmail.com"
+  phone: "+91-9056054358"
+
+team_members:
+  - name: "Arshdeep Singh"
+    email: "arshth134@gmail.com"
+    role: "ML Engineer"
+
+github_repo: "https://github.com/arsh342/redrob_hackathon"
+sandbox_link: "TODO https://YOUR-SANDBOX-LINK"
+reproduce_command: "python3 rank.py --candidates ./candidates.jsonl --out ./outputs/submission.csv"
+
+compute:
+  platform: "MacBook Air (Apple Silicon)"
+  cpu_cores: 10
+  ram_gb: 16
+  python_version: "3.14.4"
+  os: "macOS 26.5.1 (arm64)"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "ChatGPT"
+  - "Other"
+
+ai_usage_summary: |
+  Used AI assistance for planning, code iteration, review, and local coding-agent execution.
+  Final ranking runs locally with no network calls and no hosted model inference.
+
+methodology_summary: |
+  Transparent heuristic ranker over candidate profiles and Redrob behavioral signals.
+  The model prioritizes production search / retrieval / ranking / recommendation evidence,
+  product-company history, Python and evaluation literacy, and hiring-availability signals.
+  It penalizes keyword-stuffer patterns, side-project-only GenAI stories, consulting-only
+  profiles, inactivity, long notice periods, and inconsistent profile-year claims.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: false
+  reproduction_tested: true
