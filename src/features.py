@@ -31,6 +31,7 @@ class CandidateFeatures:
     candidate_num: int
     title: str
     years: float
+    country: str
     location: str
     current_company: str
     title_score: float
@@ -130,18 +131,18 @@ def location_signal(candidate: dict[str, Any]) -> tuple[float, list[str]]:
     evidence: list[str] = []
 
     if country == "india":
-        score += 4.0
+        score += 6.0
         evidence.append("india-based")
     else:
-        score -= 2.0
+        score -= 20.0
     if any(city in location_norm for city in TARGET_CITIES):
-        score += 3.0
+        score += 4.0
         evidence.append(profile.get("location", ""))
     if willing:
-        score += 2.0
+        score += 3.0
         evidence.append("willing to relocate")
     elif country != "india":
-        score -= 3.0
+        score -= 15.0
     return score, evidence
 
 
@@ -212,8 +213,8 @@ def behavior_signal(candidate: dict[str, Any]) -> tuple[float, float, list[str],
         multiplier += 0.06
         evidence.append("open to work")
     else:
-        score -= 6.0
-        multiplier -= 0.10
+        score -= 30.0
+        multiplier -= 0.30
         concerns.append("not open to work")
 
     last_active = safe_date(sig.get("last_active_date"))
@@ -231,6 +232,10 @@ def behavior_signal(candidate: dict[str, Any]) -> tuple[float, float, list[str],
             concerns.append("stale activity")
 
     response_rate = float(sig.get("recruiter_response_rate") or 0.0)
+    if response_rate < 0.5:
+        score -= 12.0
+        multiplier -= 0.15
+        concerns.append("sub-50% recruiter response")
     if response_rate >= 0.75:
         score += 5.0
         multiplier += 0.08
@@ -238,32 +243,32 @@ def behavior_signal(candidate: dict[str, Any]) -> tuple[float, float, list[str],
     elif response_rate >= 0.45:
         score += 2.0
     elif response_rate >= 0.30:
-        score -= 2.5
-        multiplier -= 0.04
+        score -= 12.0
+        multiplier -= 0.15
         concerns.append("middling recruiter response")
     elif response_rate < 0.15:
-        score -= 5.0
-        multiplier -= 0.08
+        score -= 14.0
+        multiplier -= 0.18
         concerns.append("weak recruiter response")
     else:
-        score -= 3.5
-        multiplier -= 0.06
+        score -= 10.0
+        multiplier -= 0.14
         concerns.append("weak recruiter response")
 
     notice = int(sig.get("notice_period_days") or 0)
     if notice <= 30:
-        score += 4.0
-        multiplier += 0.06
+        score += 5.0
+        multiplier += 0.08
         evidence.append(f"{notice}-day notice")
     elif notice <= 60:
         score += 2.0
     elif notice <= 90:
-        score -= 3.0
-        multiplier -= 0.04
+        score -= 14.0
+        multiplier -= 0.16
         concerns.append(f"{notice}-day notice")
     elif notice >= 120:
-        score -= 5.0
-        multiplier -= 0.08
+        score -= 24.0
+        multiplier -= 0.28
         concerns.append(f"{notice}-day notice")
     else:
         score -= 7.0
@@ -309,13 +314,14 @@ def suspicious_penalty(
     expert_count: int,
     zero_duration_expert_count: int,
     title_norm: str,
+    title_score: float,
     career_score: float,
     skills_score: float,
 ) -> tuple[float, list[str]]:
     score = 0.0
     concerns: list[str] = []
     if years < 3.0 and any(token in title_norm for token in ("senior", "staff", "lead")):
-        score += 6.0
+        score += 10.0
         concerns.append("seniority/experience mismatch")
     if summary_years is not None and abs(summary_years - years) >= 2.0:
         score += 22.0
@@ -331,9 +337,15 @@ def suspicious_penalty(
     if history_months and years * 12 - history_months > 48:
         score += 3.0
         concerns.append("experience/history mismatch")
-    if years > 12.0 and "founding" not in title_norm and "principal" not in title_norm and "staff" not in title_norm:
-        score += 5.0
+    if years > 12.0 and "founding" not in title_norm and "principal" not in title_norm and "staff" not in title_norm and "senior" not in title_norm:
+        score += 12.0
         concerns.append("outside JD experience band")
+    if title_score >= 30.0 and career_score < 35.0 and skills_score < 25.0:
+        score += 14.0
+        concerns.append("title-heavy profile")
+    elif title_score >= 35.0 and career_score + skills_score < 90.0:
+        score += 8.0
+        concerns.append("title-evidence gap")
     return score, concerns
 
 
@@ -403,6 +415,7 @@ def extract_features(candidate: dict[str, Any]) -> CandidateFeatures:
         expert_count,
         zero_duration_expert_count,
         title_norm,
+        title_score,
         career_score,
         skills_score,
     )
@@ -446,6 +459,7 @@ def extract_features(candidate: dict[str, Any]) -> CandidateFeatures:
         candidate_num=int(candidate_id.split("_")[1]),
         title=title,
         years=years,
+        country=profile.get("country", ""),
         location=profile.get("location", ""),
         current_company=profile.get("current_company", ""),
         title_score=title_score,

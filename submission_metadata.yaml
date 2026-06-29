@@ -30,7 +30,7 @@ compute:
 
 ai_tools_used:
   - "ChatGPT"
-  - "Other"
+  - "Github Copilot"
 
 ai_usage_summary: |
   Used AI assistance for planning, code iteration, review, and local coding-agent execution.
@@ -47,5 +47,5 @@ declarations:
   read_submission_spec: true
   code_is_original_work: true
   no_collusion: true
-  honeypot_check_done: false
+  honeypot_check_done: true
   reproduction_tested: true
